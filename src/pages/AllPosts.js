@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from "react";
-import MainMenu from "../components/MainMenu";
 import { get_posts } from "../api/Posts";
 const AllPosts = () => {
   const [posts, setposts] = useState([]);
-  useEffect(
-    ()=>{
-      const post = get_posts();
-      post.then(
-        (result) => {
-          setposts(result.data);
-        }
-      ).catch(
-        (err)=>{
-          console.log(err);
-        }
-      )
 
-    },[]
-  )
-
+  useEffect(() => {
+    const post = async () => {
+      const data = await get_posts();
+      setposts(data.data);
+    };
+    post();
+  }, []);
 
   return (
     <>
-      <div>
-        <MainMenu></MainMenu>
-      </div>
       <div className="container">
         <h1 className="center">All Posts</h1>
         <table className="table">
@@ -42,7 +30,6 @@ const AllPosts = () => {
                   <td>{key + 1}</td>
                   <td>{item.title}</td>
                   <td>{item.body}</td>
-
                 </tr>
               );
             })}

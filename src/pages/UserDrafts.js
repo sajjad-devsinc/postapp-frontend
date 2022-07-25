@@ -12,7 +12,6 @@ const UserDrafts = () => {
     const post = get_user_drafts(id,cookies);
     post.then(
       (result) => {
-        console.log(result.data);
         setposts(result.data);
       }
     ).catch(
@@ -20,7 +19,7 @@ const UserDrafts = () => {
         console.log(err);
       }
     )
-  }, [check]);
+  }, [check,cookies]);
   const deletePost=(id)=>{
     delete_post(id);
     setCheck(id);

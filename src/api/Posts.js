@@ -1,10 +1,10 @@
 import axios from "axios";
 const end_point=process.env.REACT_APP_API;
 export const get_posts= async ()=>{
-    const data = await axios.get(end_point+"index").then(
+    const data = await axios.get(end_point+"posts/").then(
         (result)=>{
             return result;
-            
+
         }
     ).catch(
         (err)=>{
@@ -12,11 +12,11 @@ export const get_posts= async ()=>{
         }
     )
     return data;
- 
+
 }
 
 export const new_post=(data)=>{
-    axios.post(end_point+"posts/new",data).then(
+    axios.post(end_point+"posts/",data).then(
         (data)=>{
             alert("post added successfully");
         }
@@ -29,7 +29,7 @@ export const new_post=(data)=>{
 }
 export const edit_post=(id,data)=>{
     console.log(data);
-    axios.put(end_point+"posts/edit/"+id,data).then(
+    axios.put(end_point+"posts/"+id,data).then(
         (data)=>{
             alert("post updated successfully");
         }
@@ -41,7 +41,7 @@ export const edit_post=(id,data)=>{
 
 }
 export const delete_post=(id)=>{
-    axios.delete(end_point+"posts/delete/"+id).then(
+    axios.delete(end_point+"posts/"+id).then(
         (data)=>{
             alert("post deleted successfully");
         }
@@ -57,7 +57,7 @@ export const get_user_posts= async (id,cookies)=>{
     axios.defaults.headers.common.Authorization = `Bearer ${cookies.jwt}`;
     const data = await axios.get(end_point+"posts/"+id).then(
         (result)=>{
-           return result;             
+           return result;
         }
     ).catch(
         (err)=>{
@@ -65,13 +65,13 @@ export const get_user_posts= async (id,cookies)=>{
         }
     )
     return data;
- 
+
 }
 export const get_user_drafts= async (id,cookies)=>{
     axios.defaults.headers.common.Authorization = `Bearer ${cookies.jwt}`;
     const data = await axios.get(end_point+"posts/drafts/"+id).then(
         (result)=>{
-           return result;             
+           return result;
         }
     ).catch(
         (err)=>{
@@ -79,5 +79,5 @@ export const get_user_drafts= async (id,cookies)=>{
         }
     )
     return data;
- 
+
 }

@@ -16,8 +16,11 @@ export const user_signup=(data,navigate)=>{
 export const user_login=(data,navigate)=>{
     axios.post(end_point+'users/login',data).then(
         (result)=>{
+            const decoded = jwt_decode(result.data.token);
+            const id = decoded.user._id;
             axios.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
-            navigate("/profile");
+            navigate("/posts/"+id);
+            window.location.reload(false);
         }
     ).catch(
         (err)=>{

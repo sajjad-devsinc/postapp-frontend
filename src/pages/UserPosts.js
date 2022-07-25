@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import {get_user_posts, delete_post} from '../api/Posts';
 import {user_id} from '../api/Users';
 const UserPosts = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
   const [check,setCheck]=useState();
   const [posts, setposts] = useState([]);
   useEffect(() => {
@@ -12,7 +12,6 @@ const UserPosts = () => {
     const post = get_user_posts(id,cookies);
     post.then(
       (result) => {
-        console.log(result.data);
         setposts(result.data);
       }
     ).catch(

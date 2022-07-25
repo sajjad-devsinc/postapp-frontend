@@ -1,35 +1,35 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MainMenu from "../components/MainMenu";
 import { useCookies } from "react-cookie";
 import {user_login} from '../api/Users';
+import {user_id} from '../api/Users';
 axios.defaults.withCredentials=true;
 const LogIn = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
   useEffect(
     ()=>{
+      const id=user_id(cookies);
       if(cookies.jwt){
-        navigate("/profile");
+        const url="/posts/"+id;
+        navigate(url);
       }
-    }
+    },[]
   )
   const [data, setdata] = useState({ email: "",password:"" });
   const InputHandler = (e) => {
     const { name, value } = e.target;
     setdata({ ...data, [name]: value });
   };
-  const login = () => {
+  const login = async () => {
    user_login(data,navigate);
 
   };
 
   return (
-    <div>
-       <MainMenu></MainMenu>
        <div className="center">
-     
+
      <h1>Welcome To Post App</h1>
      <h1>Login forms</h1>
      <br></br>
@@ -66,8 +66,7 @@ const LogIn = () => {
        <Link to="/signup">Sign Up</Link>
      </button>
    </div>
-    </div>
-   
+
   );
 };
 

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link,useNavigate} from "react-router-dom";
-import MainMenu from "../components/MainMenu";
 import { useCookies } from "react-cookie";
 import {user_signup} from '../api/Users';
 const SignUp = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
   useEffect(
     ()=>{
       if(cookies.jwt){
@@ -33,18 +32,17 @@ const SignUp = () => {
       );
     } else {
       user_signup(data,navigate)
-      
-          
+
+
         }
-     
+
   };
 
- 
+
   return (
-    <div>
-       <MainMenu></MainMenu>
+
     <div className="center">
-     
+
       <h1>Welcome To Post App</h1>
       <h1>Signup forms</h1>
       <br></br>
@@ -87,7 +85,7 @@ const SignUp = () => {
         <Link to="/login">Login</Link>
       </button>
     </div>
-    </div>
+
   );
 };
 
