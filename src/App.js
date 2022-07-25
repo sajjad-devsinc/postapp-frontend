@@ -9,7 +9,7 @@ import NewPost from "./pages/NewPost";
 import UserPosts from "./pages/UserPosts";
 import EditPost from "./pages/EditPost";
 import UserDrafts from "./pages/UserDrafts";
-import NavigationBar from "./components/Navigation";
+import NavigationBar from "./components/NavigationBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
