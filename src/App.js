@@ -3,13 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
-import Profile from "./pages/Profile";
 import AllPosts from "./pages/AllPosts";
 import NewPost from "./pages/NewPost";
 import UserPosts from "./pages/UserPosts";
 import EditPost from "./pages/EditPost";
 import UserDrafts from "./pages/UserDrafts";
 import NavigationBar from "./components/NavigationBar";
+import PageNotFound from "./components/PageNotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -28,9 +28,7 @@ function App() {
         <Route
           path="*"
           element={
-            <>
-              <h1> Page Not Found </h1>
-            </>
+            <PageNotFound />
           }
         />
       </Routes>

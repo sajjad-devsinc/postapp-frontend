@@ -15,7 +15,7 @@ const LogIn = () => {
         const url="/posts/"+id;
         navigate(url);
       }
-    },[]
+    },[cookies,navigate]
   )
   const [data, setdata] = useState({ email: "",password:"" });
   const InputHandler = (e) => {

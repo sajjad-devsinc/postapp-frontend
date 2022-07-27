@@ -5,7 +5,6 @@ import {edit_post} from '../api/Posts';
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location.state);
   const [data, setdata] = useState(location.state);
 
   const handlerInput = (e) => {

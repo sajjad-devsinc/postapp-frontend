@@ -17,7 +17,7 @@ const Profile = () => {
     const Id = user_id(cookies);
     setId(Id);
     navigate("./posts/" + Id);
-  }, [cookies]);
+  }, [cookies,navigate]);
   return (
     <>
       <div className="container-fluid">
