@@ -6,13 +6,9 @@ const ProtectedRoute = ({ redirectPath = "/login", children }) => {
   const navigate = useNavigate();
   useEffect(
     ()=>{
-
       if (!cookies.jwt) {
-        console.log(cookies.jwt);
-        console.log("user not login");
         return navigate(redirectPath);
       }
-
     },[]
   )
   return children;

@@ -24,7 +24,6 @@ function App() {
         <Route path="drafts" element={<ProtectedRoute><UserDrafts /></ProtectedRoute>} />
         <Route path="posts/new" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
         <Route path="posts/edit/:pid" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
-
         <Route
           path="*"
           element={

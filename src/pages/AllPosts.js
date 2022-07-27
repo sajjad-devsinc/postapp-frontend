@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { get_posts } from "../api/Posts";
 const AllPosts = () => {
   const [posts, setposts] = useState([]);
-
   useEffect(() => {
     const post = async () => {
       const data = await get_posts();
@@ -26,8 +25,8 @@ const AllPosts = () => {
           <tbody>
             {posts.map((item, key) => {
               return (
-                <tr key={key}>
-                  <td>{key + 1}</td>
+                <tr key={item._id}>
+                  <td>{key+1}</td>
                   <td>{item.title}</td>
                   <td>{item.body}</td>
                 </tr>

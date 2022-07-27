@@ -16,7 +16,6 @@ const SignUp = () => {
   const handlerInput = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-
     setdata({ ...data, [name]: value });
   };
 

@@ -1,5 +1,6 @@
 import axios from "axios";
-const END_POINT = process.env.REACT_APP_API+"posts/";
+require('./index');
+const END_POINT = process.env.REACT_APP_API + "posts/";
 export const get_posts = async () => {
   const data = await axios
     .get(END_POINT)
@@ -14,7 +15,7 @@ export const get_posts = async () => {
 
 export const new_post = (data) => {
   axios
-    .post(END_POINT , data)
+    .post(END_POINT, data)
     .then((data) => {
       alert("post added successfully");
     })
@@ -23,7 +24,6 @@ export const new_post = (data) => {
     });
 };
 export const edit_post = (id, data) => {
-  console.log(data);
   axios
     .put(END_POINT + id, data)
     .then((data) => {
@@ -45,7 +45,6 @@ export const delete_post = (id) => {
 };
 
 export const get_user_posts = async (id, cookies) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${cookies.jwt}`;
   const data = await axios
     .get(END_POINT + id)
     .then((result) => {
@@ -57,7 +56,6 @@ export const get_user_posts = async (id, cookies) => {
   return data;
 };
 export const get_user_drafts = async (id, cookies) => {
-  axios.defaults.headers.common.Authorization = `Bearer ${cookies.jwt}`;
   const data = await axios
     .get(END_POINT + "drafts/" + id)
     .then((result) => {

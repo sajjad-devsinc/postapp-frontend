@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Postform from "../components/PostForm";
 import { user_id } from "../api/Users";
 import { useCookies } from "react-cookie";
 import {new_post} from '../api/Posts';
 const NewPost = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
-  const params = useParams();
+  const [cookies] = useCookies();
   const navigate = useNavigate();
   const [data, setdata] = useState({
     title: "",
@@ -26,7 +25,7 @@ const NewPost = () => {
     } else {
       new_post(data);
       navigate(-1)
-      
+
     }
   };
   const draftpost = () =>{

@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import {user_id} from '../api/Users';
 import {get_user_drafts,delete_post} from '../api/Posts';
 const UserDrafts = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies] = useCookies();
   const [check,setCheck]=useState();
   const [posts, setposts] = useState([]);
   useEffect(() => {
@@ -16,7 +16,7 @@ const UserDrafts = () => {
       }
     ).catch(
       (err)=>{
-        console.log(err);
+        alert(err);
       }
     )
   }, [check,cookies]);
@@ -40,8 +40,8 @@ const UserDrafts = () => {
           <tbody>
             {posts.map((item, key) => {
               return (
-                <tr key={key}>
-                  <td scope="row">{key + 1}</td>
+                <tr key={item._id}>
+                  <td>{key + 1}</td>
                   <td>{item.title}</td>
                   <td>{item.body}</td>
                   <td>

@@ -16,10 +16,9 @@ const UserPosts = () => {
       }
     ).catch(
       (err)=>{
-        console.log(err);
+        alert(err);
       }
     )
-
   }, [check]);
   const deletePost=(id)=>{
     delete_post(id);
@@ -40,8 +39,8 @@ const UserPosts = () => {
           <tbody>
             {posts.map((item, key) => {
               return (
-                <tr key={key}>
-                  <td scope="row">{key + 1}</td>
+                <tr key={item._id}>
+                  <td>{key + 1}</td>
                   <td>{item.title}</td>
                   <td>{item.body}</td>
                   <td>
@@ -51,7 +50,6 @@ const UserPosts = () => {
                     <button
                       onClick={() => {
                         deletePost(item._id);
-
                       }}
                     >
                       Delete

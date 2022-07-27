@@ -24,7 +24,6 @@ export const user_login = (data, navigate) => {
     })
     .catch((err) => {
       alert("invalid Email or Password");
-      console.log(err);
     });
 };
 
