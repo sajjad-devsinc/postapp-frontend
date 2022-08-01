@@ -4,8 +4,12 @@ const AllPosts = () => {
   const [posts, setposts] = useState([]);
   useEffect(() => {
     const post = async () => {
-      const data = await get_posts();
-      setposts(data.data);
+      try {
+        const post = await get_posts();
+        setposts(post.data);
+      } catch(err) {
+        alert("internal server error");
+      }
     };
     post();
   }, []);
@@ -26,7 +30,7 @@ const AllPosts = () => {
             {posts.map((item, key) => {
               return (
                 <tr key={item._id}>
-                  <td>{key+1}</td>
+                  <td>{key + 1}</td>
                   <td>{item.title}</td>
                   <td>{item.body}</td>
                 </tr>

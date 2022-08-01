@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {user_id} from '../api/Users';
-import {get_user_drafts,delete_post} from '../api/Posts';
+import { user_id } from "../api/Users";
+import { get_user_drafts, delete_post } from "../api/Posts";
 const UserDrafts = () => {
   const [cookies] = useCookies();
-  const [check,setCheck]=useState();
+  const [check, setCheck] = useState("");
   const [posts, setposts] = useState([]);
+  const user_drafts = async () => {
+    try {
+      const id = user_id(cookies);
+      const post = await get_user_drafts(id);
+      setposts(post.data);
+    } catch (err) {
+      alert("internal server error");
+    }
+  };
   useEffect(() => {
-    const id=user_id(cookies);
-    const post = get_user_drafts(id,cookies);
-    post.then(
-      (result) => {
-        setposts(result.data);
-      }
-    ).catch(
-      (err)=>{
-        alert(err);
-      }
-    )
-  }, [check,cookies]);
-  const deletePost=(id)=>{
-    delete_post(id);
+    user_drafts();
+  }, [check, cookies]);
+  const deletePost = async (id) => {
+    try{
+    await delete_post(id);
+    alert("post deleted successfully");
     setCheck(id);
-  }
+    }
+    catch(err){
+      alert("internal server error");
+    }
+  };
 
   return (
     <>
@@ -50,7 +55,7 @@ const UserDrafts = () => {
                     </Link>
                     <button
                       onClick={() => {
-                         deletePost(item._id)
+                        deletePost(item._id);
                       }}
                     >
                       Delete

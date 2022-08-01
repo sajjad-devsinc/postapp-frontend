@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Postform from "../components/PostForm";
-import {edit_post} from '../api/Posts';
+import { edit_post } from "../api/Posts";
 const EditPost = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,23 +17,26 @@ const EditPost = () => {
       alert("Please enter all fields");
     } else {
       const temp = data;
-      temp.isPublish=true;
-      edit_post(location.state._id,temp);
+      temp.isPublish = true;
+      edit_post(location.state._id, temp);
       navigate(-1);
-
     }
   };
-  const draftpost = () =>{
+  const draftpost = async () => {
     if (data.title === "" || data.body === "") {
       alert("Please enter all fields");
     } else {
       const temp = data;
-      temp.isPublish=false;
-      edit_post(location.state._id,temp);
-      navigate(-1);
+      temp.isPublish = false;
+      try {
+        await edit_post(location.state._id, temp);
+        alert("post updated successfully");
+        navigate(-1);
+      } catch (err) {
+        alert("internal server error");
+      }
     }
-
-  }
+  };
   return (
     <>
       <div className="App">

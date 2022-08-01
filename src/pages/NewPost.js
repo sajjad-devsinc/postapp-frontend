@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Postform from "../components/PostForm";
 import { user_id } from "../api/Users";
 import { useCookies } from "react-cookie";
-import {new_post} from '../api/Posts';
+import { new_post } from "../api/Posts";
 const NewPost = () => {
   const [cookies] = useCookies();
   const navigate = useNavigate();
@@ -19,32 +19,41 @@ const NewPost = () => {
 
     setdata({ ...data, [name]: value });
   };
-  const addpost = () => {
+  const addpost = async () => {
     if (data.title === "" || data.body === "") {
       alert("Please enter all fields");
     } else {
-      new_post(data);
-      navigate(-1)
-
+      try {
+        await new_post(data);
+        alert("post added successfully");
+        navigate(-1);
+      } catch (err) {
+        alert("Internal server error");
+      }
     }
   };
-  const draftpost = () =>{
+  const draftpost = () => {
     if (data.title === "" || data.body === "") {
       alert("Please enter all fields");
     } else {
       const temp = data;
-      temp.isPublish=false;
+      temp.isPublish = false;
       new_post(temp);
-      navigate(-1)
+      navigate(-1);
     }
-  }
+  };
   return (
     <>
       <div className="App">
         <h1 className="center">Add a Post</h1>
 
         <br></br>
-        <Postform formdata={data} setdata={handlerInput} submitfunc={addpost} draftfunc={draftpost} />
+        <Postform
+          formdata={data}
+          setdata={handlerInput}
+          submitfunc={addpost}
+          draftfunc={draftpost}
+        />
       </div>
     </>
   );

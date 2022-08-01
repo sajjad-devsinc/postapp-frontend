@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {get_user_posts, delete_post} from '../api/Posts';
-import {user_id} from '../api/Users';
+import { get_user_posts, delete_post } from "../api/Posts";
+import { user_id } from "../api/Users";
 const UserPosts = () => {
   const [cookies] = useCookies();
-  const [check,setCheck]=useState();
+  const [check, setCheck] = useState("");
   const [posts, setposts] = useState([]);
+  const user_posts = async () => {
+    try {
+      const id = user_id(cookies);
+      const post = await get_user_posts(id);
+      setposts(post.data);
+    } catch (err) {
+      alert("internal server error");
+    }
+  };
+
   useEffect(() => {
-    const id=user_id(cookies);
-    const post = get_user_posts(id,cookies);
-    post.then(
-      (result) => {
-        setposts(result.data);
-      }
-    ).catch(
-      (err)=>{
-        alert(err);
-      }
-    )
+    user_posts();
   }, [check]);
-  const deletePost=(id)=>{
-    delete_post(id);
-    setCheck(id);
-  }
+  const deletePost = async (id) => {
+    try {
+      await delete_post(id);
+      setCheck(id);
+    } catch (err) {
+      alert("internal server error");
+    }
+  };
   return (
     <>
       <div className="container">
