@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { user_id } from "../api/Users";
-import axios from "axios";
-const NavigationBar = () => {
-  const [cookies, setCookie, removeCookie] = useCookies();
+
+const NavigationBar = ({props}) => {
+  const [cookies,, removeCookie] = useCookies();
   const [id, setId] = useState();
   function handleRemoveCookie() {
     removeCookie("jwt", { path: "/" });
-    axios.defaults.headers.common.Authorization = null;
   }
   useEffect(() => {
     const id = user_id(cookies);
     setId(id);
-  }, [cookies]);
+    console.log("use effect coookie");
+    console.log(cookies.jwt);
+  },[cookies] );
 
   const stylesheet = {
     link: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import SignUp from "./pages/SignUp";
@@ -11,6 +11,7 @@ import UserDrafts from "./pages/UserDrafts";
 import NavigationBar from "./components/NavigationBar";
 import PageNotFound from "./components/PageNotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useCookies } from "react-cookie";
 
 function App() {
   return (

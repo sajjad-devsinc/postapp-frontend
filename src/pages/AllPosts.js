@@ -8,7 +8,7 @@ const AllPosts = () => {
         const post = await get_posts();
         setposts(post.data);
       } catch(err) {
-        alert("internal server error");
+        alert("internal server errora");
       }
     };
     post();

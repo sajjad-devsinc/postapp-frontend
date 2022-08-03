@@ -31,8 +31,6 @@ const SignUp = () => {
       );
     } else {
       user_signup(data,navigate)
-
-
         }
 
   };

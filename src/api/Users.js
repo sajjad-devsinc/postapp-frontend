@@ -1,9 +1,8 @@
 import axios from "axios";
+import set_token from "./index";
 import jwt_decode from "jwt-decode";
 const END_POINT = process.env.REACT_APP_API+"users/";
-export const user_signup = (data, navigate) => {
-  axios
-    .post(END_POINT+ "signup", data)
+export const user_signup = (data, navigate) => { axios.post(END_POINT+ "signup", data)
     .then((result) => {
       alert("signup successfully now you can login");
       navigate("/login");
@@ -18,9 +17,9 @@ export const user_login = (data, navigate) => {
     .then((result) => {
       const decoded = jwt_decode(result.data.token);
       const id = decoded.user._id;
-      axios.defaults.headers.common.Authorization = `Bearer ${result.data.token}`;
-      navigate("/posts/" + id);
-      window.location.reload(false);
+      set_token();
+      navigate('/posts/' + id);
+      // window.location.reload(false);
     })
     .catch((err) => {
       alert("invalid Email or Password");
