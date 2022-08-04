@@ -12,8 +12,6 @@ const NavigationBar = ({props}) => {
   useEffect(() => {
     const id = user_id(cookies);
     setId(id);
-    console.log("use effect coookie");
-    console.log(cookies.jwt);
   },[cookies] );
 
   const stylesheet = {
