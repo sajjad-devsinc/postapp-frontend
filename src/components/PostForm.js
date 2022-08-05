@@ -1,13 +1,13 @@
 import React from "react";
+
 const PostForm = (props) => {
-  const handlerInput=(e)=>{
-      e.preventDefault();
-  }
+  const handlerInput = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-      <form
-        onSubmit={handlerInput}
-      >
+      <form onSubmit={handlerInput}>
         <input
           className="form-control"
           type="text"
@@ -32,7 +32,7 @@ const PostForm = (props) => {
           }}
           value="Publish"
         />
-         <input
+        <input
           className="form-control"
           type="submit"
           onClick={() => {

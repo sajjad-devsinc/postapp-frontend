@@ -18,6 +18,7 @@ const EditPost = () => {
     } else {
       const temp = data;
       temp.isPublish = true;
+      // try catch
       edit_post(location.state._id, temp);
       navigate(-1);
     }

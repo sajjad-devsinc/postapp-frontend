@@ -1,8 +1,12 @@
 import axios from "axios";
 import set_token from "./index";
 import jwt_decode from "jwt-decode";
-const END_POINT = process.env.REACT_APP_API+"users/";
-export const user_signup = (data, navigate) => { axios.post(END_POINT+ "signup", data)
+
+const END_POINT = process.env.REACT_APP_API + "users/";
+
+export const user_signup = (data, navigate) => {
+  axios
+    .post(END_POINT + "signup", data)
     .then((result) => {
       alert("signup successfully now you can login");
       navigate("/login");
@@ -11,6 +15,7 @@ export const user_signup = (data, navigate) => { axios.post(END_POINT+ "signup",
       alert("email already exist");
     });
 };
+
 export const user_login = (data, navigate) => {
   axios
     .post(END_POINT + "login", data)
@@ -18,8 +23,8 @@ export const user_login = (data, navigate) => {
       const decoded = jwt_decode(result.data.token);
       const id = decoded.user._id;
       set_token();
-      navigate('/posts/' + id);
-      // window.location.reload(false);
+      navigate("/posts/" + id);
+      window.location.reload(false);
     })
     .catch((err) => {
       alert("invalid Email or Password");

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { get_posts } from "../api/Posts";
+
 const AllPosts = () => {
   const [posts, setposts] = useState([]);
   useEffect(() => {
@@ -7,7 +8,7 @@ const AllPosts = () => {
       try {
         const post = await get_posts();
         setposts(post.data);
-      } catch(err) {
+      } catch (err) {
         alert("internal server errora");
       }
     };

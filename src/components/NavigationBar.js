@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { user_id } from "../api/Users";
 
-const NavigationBar = ({props}) => {
-  const [cookies,, removeCookie] = useCookies();
+const NavigationBar = ({ props }) => {
+  const [cookies, , removeCookie] = useCookies();
   const [id, setId] = useState();
+
   function handleRemoveCookie() {
     removeCookie("jwt", { path: "/" });
   }
+
   useEffect(() => {
     const id = user_id(cookies);
     setId(id);
-  },[cookies] );
+  }, [cookies]);
 
   const stylesheet = {
     link: {
@@ -22,6 +24,7 @@ const NavigationBar = ({props}) => {
       marginRight: "20px",
     },
   };
+
   return (
     <div className="container-fluid">
       <nav className="menu">

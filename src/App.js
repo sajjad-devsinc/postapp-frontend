@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import SignUp from "./pages/SignUp";
@@ -11,7 +11,6 @@ import UserDrafts from "./pages/UserDrafts";
 import NavigationBar from "./components/NavigationBar";
 import PageNotFound from "./components/PageNotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useCookies } from "react-cookie";
 
 function App() {
   return (
@@ -21,16 +20,39 @@ function App() {
         <Route path="/" element={<AllPosts />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
-        <Route path="posts/:uid" element={<ProtectedRoute><UserPosts /></ProtectedRoute>} />
-        <Route path="drafts" element={<ProtectedRoute><UserDrafts /></ProtectedRoute>} />
-        <Route path="posts/new" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
-        <Route path="posts/edit/:pid" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
         <Route
-          path="*"
+          path="posts/:uid"
           element={
-            <PageNotFound />
+            <ProtectedRoute>
+              <UserPosts />
+            </ProtectedRoute>
           }
         />
+        <Route
+          path="drafts"
+          element={
+            <ProtectedRoute>
+              <UserDrafts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="posts/new"
+          element={
+            <ProtectedRoute>
+              <NewPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="posts/edit/:pid"
+          element={
+            <ProtectedRoute>
+              <EditPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </>
   );
