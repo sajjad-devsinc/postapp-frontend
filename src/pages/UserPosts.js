@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import Posts from "../components/Posts";
 import { useCookies } from "react-cookie";
-import { get_user_posts, delete_post } from "../api/Posts";
-import { user_id } from "../api/Users";
+import * as UserHelper from "../api/Users";
+import * as PostHelper from "../api/Posts";
+
 const UserPosts = () => {
   const [cookies] = useCookies();
-  const [check, setCheck] = useState("");
   const [posts, setposts] = useState([]);
-  const user_posts = async () => {
-    try {
-      const id = user_id(cookies);
-      const post = await get_user_posts(id);
-      setposts(post.data);
-    } catch (err) {
-      alert("internal server error");
-    }
-  };
+  const [check, setcheck] = useState();
 
   useEffect(() => {
+    const user_posts = async () => {
+      try {
+        const id = UserHelper.user_id(cookies);
+        const post = await PostHelper.get_user_posts(id);
+        setposts(post.data);
+      } catch (err) {
+        alert("internal server error");
+      }
+    };
     user_posts();
-  }, [check]);
-  const deletePost = async (id) => {
+  }, [cookies, check]);
+
+  const deletePost = useCallback(async (id) => {
     try {
-      await delete_post(id);
-      setCheck(id);
+      await PostHelper.delete_post(id);
+      setcheck(id);
+      alert("post deleted successfully");
     } catch (err) {
       alert("internal server error");
     }
-  };
+  }, []);
+
   return (
     <>
       <div className="container">
@@ -41,31 +45,12 @@ const UserPosts = () => {
             </tr>
           </thead>
           <tbody>
-            {posts.map((item, key) => {
-              return (
-                <tr key={item._id}>
-                  <td>{key + 1}</td>
-                  <td>{item.title}</td>
-                  <td>{item.body}</td>
-                  <td>
-                    <Link to={"../posts/edit/" + item._id} state={item}>
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => {
-                        deletePost(item._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            <Posts data={posts} action={true} deletefunc={deletePost}></Posts>
           </tbody>
         </table>
       </div>
     </>
   );
 };
+
 export default UserPosts;

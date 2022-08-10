@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { get_posts } from "../api/Posts";
+import * as PostHelper from "../api/Posts";
+import Posts from "../components/Posts";
 
 const AllPosts = () => {
   const [posts, setposts] = useState([]);
+
   useEffect(() => {
     const post = async () => {
       try {
-        const post = await get_posts();
+        const post = await PostHelper.get_posts();
         setposts(post.data);
       } catch (err) {
         alert("internal server errora");
@@ -28,7 +30,8 @@ const AllPosts = () => {
             </tr>
           </thead>
           <tbody>
-            {posts.map((item, key) => {
+            <Posts data={posts}></Posts>
+            {/* {posts.map((item, key) => {
               return (
                 <tr key={item._id}>
                   <td>{key + 1}</td>
@@ -36,11 +39,12 @@ const AllPosts = () => {
                   <td>{item.body}</td>
                 </tr>
               );
-            })}
+            })} */}
           </tbody>
         </table>
       </div>
     </>
   );
 };
+
 export default AllPosts;

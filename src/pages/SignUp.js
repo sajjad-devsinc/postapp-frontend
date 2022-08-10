@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Link,useNavigate} from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {user_signup} from '../api/Users';
+import * as UserHelper from "../api/Users";
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [cookies] = useCookies();
-  useEffect(
-    ()=>{
-      if(cookies.jwt){
-        navigate("/profile");
-      }
+
+  useEffect(() => {
+    if (cookies.jwt) {
+      navigate("/profile");
     }
-  )
-  const [data, setdata] = useState({name: "", email: "", password: "" });
+  });
+
+  const [data, setdata] = useState({ name: "", email: "", password: "" });
   const handlerInput = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     setdata({ ...data, [name]: value });
   };
 
-  const signup =  () => {
+  const signup = useCallback(async () => {
     const regex = new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     );
@@ -30,16 +31,18 @@ const SignUp = () => {
         "Please enter Valid password : Minimum eight characters, at least one uppercase letter, one lowercase letter one number and one special character"
       );
     } else {
-      user_signup(data,navigate)
-        }
-
-  };
-
+      try {
+        await UserHelper.user_signup(data);
+        alert("signup successfully now you can login");
+        navigate("/login");
+      } catch (err) {
+        alert("email already exist");
+      }
+    }
+  }, [data, navigate]);
 
   return (
-
     <div className="center">
-
       <h1>Welcome To Post App</h1>
       <h1>Signup forms</h1>
       <br></br>
@@ -82,7 +85,6 @@ const SignUp = () => {
         <Link to="/login">Login</Link>
       </button>
     </div>
-
   );
 };
 

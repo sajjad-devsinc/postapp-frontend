@@ -10,8 +10,9 @@ const ProtectedRoute = ({ redirectPath = "/login", children }) => {
     if (!cookies.jwt) {
       return navigate(redirectPath);
     }
-  }, [cookies, redirectPath, navigate]);
-  return children;
+  }, [cookies, redirectPath, navigate, children]);
+
+  if (cookies.jwt) return children;
 };
 
 export default ProtectedRoute;

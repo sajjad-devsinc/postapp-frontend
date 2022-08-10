@@ -1,34 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import Posts from "../components/Posts";
 import { useCookies } from "react-cookie";
-import { user_id } from "../api/Users";
-import { get_user_drafts, delete_post } from "../api/Posts";
+import * as UserHelper from "../api/Users";
+import * as PostHelper from "../api/Posts";
+
 const UserDrafts = () => {
   const [cookies] = useCookies();
-  const [check, setCheck] = useState("");
   const [posts, setposts] = useState([]);
-  const user_drafts = async () => {
+  const [check, setcheck] = useState();
+  useEffect(() => {
+    const user_drafts = async () => {
+      try {
+        const id = UserHelper.user_id(cookies);
+        const post = await PostHelper.get_user_drafts(id);
+        setposts(post.data);
+      } catch (err) {
+        alert("internal server error");
+      }
+    };
+    user_drafts();
+  }, [cookies, check]);
+
+  const deletePost = useCallback(async (id) => {
     try {
-      const id = user_id(cookies);
-      const post = await get_user_drafts(id);
-      setposts(post.data);
+      await PostHelper.delete_post(id);
+      setcheck(id);
+      alert("post deleted successfully");
     } catch (err) {
       alert("internal server error");
     }
-  };
-  useEffect(() => {
-    user_drafts();
-  }, [check, cookies]);
-  const deletePost = async (id) => {
-    try{
-    await delete_post(id);
-    alert("post deleted successfully");
-    setCheck(id);
-    }
-    catch(err){
-      alert("internal server error");
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -43,27 +44,7 @@ const UserDrafts = () => {
             </tr>
           </thead>
           <tbody>
-            {posts.map((item, key) => {
-              return (
-                <tr key={item._id}>
-                  <td>{key + 1}</td>
-                  <td>{item.title}</td>
-                  <td>{item.body}</td>
-                  <td>
-                    <Link to={"../posts/edit/" + item._id} state={item}>
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => {
-                        deletePost(item._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            <Posts data={posts} action={true} deletefunc={deletePost}></Posts>
           </tbody>
         </table>
       </div>

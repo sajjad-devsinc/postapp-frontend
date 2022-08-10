@@ -45,4 +45,4 @@ const PostForm = (props) => {
   );
 };
 
-export default PostForm;
+export default React.memo(PostForm);
