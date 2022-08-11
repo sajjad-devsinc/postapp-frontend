@@ -1,22 +1,20 @@
+import axios from "axios";
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
-import set_token from "../api/index";
 import jwt_decode from "jwt-decode";
 import * as UserHelper from "../api/Users";
-
+axios.defaults.withCredentials = true;
 const LogIn = () => {
   const navigate = useNavigate();
-  const [cookies] = useCookies();
   const [data, setdata] = useState({ email: "", password: "" });
 
   useEffect(() => {
-    const id = UserHelper.user_id(cookies);
-    if (cookies.jwt) {
+    const id = UserHelper.user_id();
+    if (localStorage.getItem("jwt")) {
       const url = "/posts/" + id;
       navigate(url);
     }
-  }, [cookies, navigate]);
+  }, [navigate]);
 
   const InputHandler = (e) => {
     const { name, value } = e.target;
@@ -25,16 +23,15 @@ const LogIn = () => {
 
   const login = useCallback(async () => {
     try {
-      const user = await UserHelper.user_login(data);
-      console.log(user);
-      const decoded = jwt_decode(user.data.token);
+      const result = await UserHelper.user_login(data);
+      const token = result.data.token;
+      const decoded = jwt_decode(token);
       const id = decoded.user._id;
-      console.log(id);
-      set_token();
+      localStorage.setItem("jwt", token);
       navigate("/posts/" + id);
-      // window.location.reload(false);
+      window.location.reload(false);
     } catch (err) {
-      alert("invalid Email or Password");
+      alert("internal server error");
     }
   }, [data, navigate]);
 

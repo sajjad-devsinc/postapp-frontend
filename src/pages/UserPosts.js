@@ -1,18 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Posts from "../components/Posts";
-import { useCookies } from "react-cookie";
 import * as UserHelper from "../api/Users";
 import * as PostHelper from "../api/Posts";
 
 const UserPosts = () => {
-  const [cookies] = useCookies();
   const [posts, setposts] = useState([]);
   const [check, setcheck] = useState();
 
   useEffect(() => {
     const user_posts = async () => {
       try {
-        const id = UserHelper.user_id(cookies);
+        const id = UserHelper.user_id();
         const post = await PostHelper.get_user_posts(id);
         setposts(post.data);
       } catch (err) {
@@ -20,7 +18,7 @@ const UserPosts = () => {
       }
     };
     user_posts();
-  }, [cookies, check]);
+  }, [check]);
 
   const deletePost = useCallback(async (id) => {
     try {

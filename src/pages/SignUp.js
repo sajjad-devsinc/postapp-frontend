@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import * as UserHelper from "../api/Users";
-
 const SignUp = () => {
   const navigate = useNavigate();
-  const [cookies] = useCookies();
 
   useEffect(() => {
-    if (cookies.jwt) {
+    if (localStorage.getItem("jwt")) {
       navigate("/profile");
     }
   });
@@ -32,7 +29,7 @@ const SignUp = () => {
       );
     } else {
       try {
-        await UserHelper.user_signup(data);
+        await UserHelper.user_signup(data, navigate);
         alert("signup successfully now you can login");
         navigate("/login");
       } catch (err) {

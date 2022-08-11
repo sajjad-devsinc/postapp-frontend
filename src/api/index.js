@@ -1,8 +1,7 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const set_token = () => {
-  axios.defaults.headers.common.Authorization = `Bearer ${Cookies.get("jwt")}`;
+const set_token = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   return axios;
 };
 

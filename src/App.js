@@ -39,7 +39,7 @@ function App() {
         <Route
           path="posts/new"
           element={
-            <ProtectedRoute children={<NewPost />}>
+            <ProtectedRoute>
               <NewPost />
             </ProtectedRoute>
           }

@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { user_id } from "../api/Users";
 
-const NavigationBar = ({ props }) => {
-  const [cookies, , removeCookie] = useCookies();
+const NavigationBar = () => {
+  const [check, setCheck] = useState(localStorage.getItem("jwt"));
   const [id, setId] = useState();
 
   function handleRemoveCookie() {
-    removeCookie("jwt", { path: "/" });
+    localStorage.removeItem("jwt");
+    setCheck("");
   }
 
   useEffect(() => {
-    const id = user_id(cookies);
+    const id = user_id();
     setId(id);
-  }, [cookies]);
+  }, [check]);
 
   const stylesheet = {
     link: {
@@ -31,7 +31,7 @@ const NavigationBar = ({ props }) => {
         <Link style={stylesheet.link} to="/">
           All Posts
         </Link>
-        {cookies.jwt ? (
+        {check ? (
           <>
             <Link style={stylesheet.link} to={"./posts/" + id}>
               My Posts

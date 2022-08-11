@@ -1,18 +1,16 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Postform from "../components/PostForm";
-import { useCookies } from "react-cookie";
 import * as UserHelper from "../api/Users";
 import * as PostHelper from "../api/Posts";
 
 const NewPost = () => {
-  const [cookies] = useCookies();
   const navigate = useNavigate();
   const [data, setdata] = useState({
     title: "",
     body: "",
     isPublish: true,
-    userId: UserHelper.user_id(cookies),
+    userId: UserHelper.user_id(),
   });
 
   const handlerInput = (e) => {
