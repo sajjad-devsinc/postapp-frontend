@@ -19,7 +19,7 @@ const SignUp = () => {
 
   const signup = useCallback(async () => {
     const regex = new RegExp(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]{8,}$/
     );
     if (data.name === "" || data.email === "" || data.password === "") {
       alert("Please Fill all the fields");
@@ -33,7 +33,8 @@ const SignUp = () => {
         alert("signup successfully now you can login");
         navigate("/login");
       } catch (err) {
-        alert("email already exist");
+        if (err.response.status === 422) alert(err.response.data.errors[0].msg);
+        else alert("Email already exist");
       }
     }
   }, [data, navigate]);

@@ -13,17 +13,21 @@ const EditPost = () => {
     setdata({ ...data, [name]: value });
   };
 
-  const editpost = useCallback(() => {
+  const editpost = useCallback(async () => {
     if (data.title === "" || data.body === "") {
       alert("Please enter all fields");
     } else {
       try {
         const temp = data;
         temp.isPublish = true;
-        PostHelper.edit_post(location.state._id, temp);
+        await PostHelper.edit_post(location.state._id, temp);
         navigate(-1);
       } catch (err) {
-        alert("Internal server error");
+        if (err.response.status === 422)
+          alert(
+            "invalid data : title should have minimum 6 chracters and body should have minimum 10 characters"
+          );
+        else alert("Internal Server Error");
       }
     }
   }, [data, navigate, location]);
@@ -39,7 +43,11 @@ const EditPost = () => {
         alert("post updated successfully");
         navigate(-1);
       } catch (err) {
-        alert("internal server error");
+        if (err.response.status === 422)
+          alert(
+            "invalid data : title should have minimum 6 chracters and body should have minimum 10 characters"
+          );
+        else alert("Internal Server Error");
       }
     }
   }, [data, navigate, location]);

@@ -27,7 +27,11 @@ const NewPost = () => {
         alert("post added successfully");
         navigate(-1);
       } catch (err) {
-        alert("Internal server error");
+        if (err.response.status === 422)
+          alert(
+            "invalid data : title should have minimum 6 chracters and body should have minimum 10 characters"
+          );
+        else alert("Internal Server Error");
       }
     }
   }, [data, navigate]);
@@ -39,10 +43,14 @@ const NewPost = () => {
       try {
         const temp = data;
         temp.isPublish = false;
-        PostHelper.new_post(temp);
+        await PostHelper.new_post(temp);
         navigate(-1);
       } catch (err) {
-        alert("Internal server error");
+        if (err.response.status === 422)
+          alert(
+            "invalid data : title should have minimum 6 chracters and body should have minimum 10 characters"
+          );
+        else alert("Internal Server Error");
       }
     }
   }, [data, navigate]);

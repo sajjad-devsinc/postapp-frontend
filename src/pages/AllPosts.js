@@ -31,15 +31,6 @@ const AllPosts = () => {
           </thead>
           <tbody>
             <Posts data={posts}></Posts>
-            {/* {posts.map((item, key) => {
-              return (
-                <tr key={item._id}>
-                  <td>{key + 1}</td>
-                  <td>{item.title}</td>
-                  <td>{item.body}</td>
-                </tr>
-              );
-            })} */}
           </tbody>
         </table>
       </div>
