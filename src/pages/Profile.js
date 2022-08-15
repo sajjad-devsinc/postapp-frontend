@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { user_id } from "../api/Users";
+import * as UserHelper from "../api/Users";
 import axios from "axios";
 const Profile = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    const Id = user_id(cookies);
+    const Id = UserHelper.userId(cookies);
     setId(Id);
     navigate("./posts/" + Id);
   }, [cookies, navigate]);

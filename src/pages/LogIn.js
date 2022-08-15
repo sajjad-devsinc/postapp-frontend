@@ -9,7 +9,7 @@ const LogIn = () => {
   const [data, setdata] = useState({ email: "", password: "" });
 
   useEffect(() => {
-    const id = UserHelper.user_id();
+    const id = UserHelper.userId();
     if (localStorage.getItem("jwt")) {
       const url = "/posts/" + id;
       navigate(url);
@@ -23,7 +23,7 @@ const LogIn = () => {
 
   const login = useCallback(async () => {
     try {
-      const result = await UserHelper.user_login(data);
+      const result = await UserHelper.userLogin(data);
       const token = result.data.token;
       const decoded = jwt_decode(token);
       const id = decoded.user._id;

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import Postform from "../components/PostForm";
+import PostForm from "../components/PostForm";
 import * as UserHelper from "../api/Users";
 import * as PostHelper from "../api/Posts";
 
@@ -10,7 +10,7 @@ const NewPost = () => {
     title: "",
     body: "",
     isPublish: true,
-    userId: UserHelper.user_id(),
+    userId: UserHelper.userId(),
   });
 
   const handlerInput = (e) => {
@@ -23,7 +23,7 @@ const NewPost = () => {
       alert("Please enter all fields");
     } else {
       try {
-        await PostHelper.new_post(data);
+        await PostHelper.newPost(data);
         alert("post added successfully");
         navigate(-1);
       } catch (err) {
@@ -43,7 +43,8 @@ const NewPost = () => {
       try {
         const temp = data;
         temp.isPublish = false;
-        await PostHelper.new_post(temp);
+        await PostHelper.newPost(temp);
+        alert("Draft added successfully");
         navigate(-1);
       } catch (err) {
         if (err.response.status === 422)
@@ -60,7 +61,7 @@ const NewPost = () => {
       <div className="App">
         <h1 className="center">Add a Post</h1>
         <br></br>
-        <Postform
+        <PostForm
           formdata={data}
           setdata={handlerInput}
           submitfunc={addpost}

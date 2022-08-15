@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { user_id } from "../api/Users";
+import { userId } from "../api/Users";
 
 const NavigationBar = () => {
   const [check, setCheck] = useState(localStorage.getItem("jwt"));
@@ -12,7 +12,7 @@ const NavigationBar = () => {
   }
 
   useEffect(() => {
-    const id = user_id();
+    const id = userId();
     setId(id);
   }, [check]);
 

@@ -20,7 +20,7 @@ const EditPost = () => {
       try {
         const temp = data;
         temp.isPublish = true;
-        await PostHelper.edit_post(location.state._id, temp);
+        await PostHelper.editPost(location.state._id, temp);
         navigate(-1);
       } catch (err) {
         if (err.response.status === 422)
@@ -39,7 +39,7 @@ const EditPost = () => {
       const temp = data;
       temp.isPublish = false;
       try {
-        await PostHelper.edit_post(location.state._id, temp);
+        await PostHelper.editPost(location.state._id, temp);
         alert("post updated successfully");
         navigate(-1);
       } catch (err) {

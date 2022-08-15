@@ -29,7 +29,7 @@ const SignUp = () => {
       );
     } else {
       try {
-        await UserHelper.user_signup(data, navigate);
+        await UserHelper.userSignup(data, navigate);
         alert("signup successfully now you can login");
         navigate("/login");
       } catch (err) {

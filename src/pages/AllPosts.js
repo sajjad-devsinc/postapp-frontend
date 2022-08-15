@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useFetch } from "../hooks/useFetch";
 import * as PostHelper from "../api/Posts";
 import Posts from "../components/Posts";
 
 const AllPosts = () => {
-  const [posts, setposts] = useState([]);
-
-  useEffect(() => {
-    const post = async () => {
-      try {
-        const post = await PostHelper.get_posts();
-        setposts(post.data);
-      } catch (err) {
-        alert("internal server errora");
-      }
-    };
-    post();
-  }, []);
-
+  const [data, error, loading] = useFetch(PostHelper.getPosts, true);
+  if (error) {
+    alert(error);
+  }
   return (
     <>
+      {loading ? <>loading data</> : <></>}
       <div className="container">
         <h1 className="center">All Posts</h1>
         <table className="table">
@@ -29,9 +21,7 @@ const AllPosts = () => {
               <th scope="col">Content</th>
             </tr>
           </thead>
-          <tbody>
-            <Posts data={posts}></Posts>
-          </tbody>
+          <tbody>{data ? <Posts data={data}></Posts> : <></>}</tbody>
         </table>
       </div>
     </>

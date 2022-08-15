@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
-import set_token from "./index";
+import setToken from "./index";
 
 const END_POINT = process.env.REACT_APP_API + "posts/";
-const axios = set_token(localStorage.getItem("jwt"));
+const axios = setToken(localStorage.getItem("jwt"));
 
-export const get_posts = () => axios.get(END_POINT);
-export const new_post = (data) => axios.post(END_POINT, data);
-export const edit_post = (id, data) => axios.put(END_POINT + id, data);
-export const delete_post = (id) => axios.delete(END_POINT + id);
-export const get_user_posts = (id) => axios.get(END_POINT + id);
-export const get_user_drafts = (id) => axios.get(END_POINT + "drafts/" + id);
+export const getPosts = () => axios.get(END_POINT);
+export const newPost = (data) => axios.post(END_POINT, data);
+export const editPost = (id, data) => axios.put(END_POINT + id, data);
+export const deletePost = (id) => axios.delete(END_POINT + id);
+export const getUserPosts = (id) => axios.get(END_POINT + id);
+export const getUserDrafts = (id) => axios.get(END_POINT + "drafts/" + id);
